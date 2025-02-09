@@ -9,8 +9,13 @@
 </head>
 <body>
     <h1>이미지 색상 추출기</h1>
-    <input type="file" id="upload" accept="image/*">
-    <button onclick="uploadImage()">색상 추출</button>
+
+    <!-- 파일 업로드 버튼 -->
+    <input type="file" id="upload" accept="image/*" hidden>
+    <label for="upload" id="upload-label">📂 파일 선택</label>
+    <button onclick="uploadImage()">🎨 색상 추출</button>
+
+    <!-- 색상 추출 결과 -->
     <div id="result"></div>
 
     <script src="/static/script.js"></script>

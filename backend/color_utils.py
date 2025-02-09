@@ -1,6 +1,5 @@
 import numpy as np # 이미지를 숫자 배열로 변환
-import cv2 # 이미지 처리를 위한 라이브러리
-from collections import Counter # 색상의 빈도를 계산
+from sklearn.cluster import KMeans # scikit-learn의 KMeans를 활용
 from PIL import Image # 이미지를 읽고 RGB로 변환
 
 '''
@@ -18,13 +17,16 @@ def extract_colors(image: Image, num_colors=10):
     image = image.convert("RGB") # RGB 모드로 변환
     img_array = np.array(image) # 이미지를 Numpy 배열로 변환
 
+    # 크기 조정 (너비 또는 높이가 300px을 넘지 않도록 리사이징)
+    image.thumbnail((300, 300))
+
     # 픽셀을 (R,G,B) 형태로 변환
     pixels = img_array.reshape(-1, 3)
 
-    # 색상 카운트 (빈도가 높은 색상 찾기)
-    color_counts = Counter(map(tuple, pixels))
-    most_common_colors = color_counts.most_common(num_colors)
+    # k-means 클러스터링 적용
+    kmeans = KMeans(n_clusters=num_colors, random_state=0, n_init=10)
+    kmeans.fit(pixels)
 
-    # RGB -> HEX 변환
-    hex_colors = [rgb_to_hex(color[0]) for color in most_common_colors]
+    # 중심 색상 추출 후 HEX로 변환
+    hex_colors = [rgb_to_hex(color) for color in kmeans.cluster_centers_.astype(int)]
     return hex_colors
