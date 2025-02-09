@@ -1,3 +1,5 @@
+const API_URL = "https://my-fastapi.onrender.com";
+
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("upload").addEventListener("change", function(event) {
         let fileName;
@@ -16,7 +18,7 @@ async function uploadImage() {
     const formData = new FormData();
     formData.append("file", fileInput.files[0]);
 
-    const response = await fetch("http://localhost:8000/upload/", {
+    const response = await fetch("${API_URL}/upload/", {
         method: "POST",
         body: formData
     });

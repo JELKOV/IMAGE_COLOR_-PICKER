@@ -4,7 +4,7 @@ import io # 바이너리 데이터를 이미지로 변환
 from PIL import Image
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from color_utils import extract_colors # 색상 추출 라이브러리 가져오기
+from backend.color_utils import extract_colors # 색상 추출 라이브러리 가져오기 # Render 배포를 위한 수정
 from fastapi.middleware.cors import CORSMiddleware # JS에서 API 호출을 허용
 
 app = FastAPI()
