@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from backend.color_utils import extract_colors # 색상 추출 라이브러리 가져오기 # Render 배포를 위한 수정
 from fastapi.middleware.cors import CORSMiddleware # JS에서 API 호출을 허용
-
+import os
 app = FastAPI()
 
 
@@ -24,7 +24,8 @@ app.add_middleware(
 )
 
 # 정적 파일 ( HTML/ JS) 제공
-app.mount("/static", StaticFiles(directory="static"), name="static")
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.get("/")
 def home():
